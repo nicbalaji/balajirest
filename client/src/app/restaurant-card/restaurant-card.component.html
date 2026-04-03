@@ -1,0 +1,23 @@
+<div *ngIf="restaurant" 
+     class="card shadow mb-4"
+     (click)="viewDetails(restaurant._id)">
+
+  <!-- Image -->
+  <img 
+    src="https://via.placeholder.com/300x150" 
+    class="card-img-top" 
+    alt="Restaurant Image">
+
+  <div class="card-body">
+    <h5 class="card-title">{{restaurant.name}}</h5>
+    
+    <p class="card-text">
+      📍 {{restaurant.location}}
+    </p>
+
+    <span class="badge bg-success">
+      ⭐ {{restaurant.rating}}
+    </span>
+  </div>
+
+</div>

@@ -1,0 +1,19 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <h2>Restaurant List</h2>
+
+  <!-- Filters -->
+  <div class="filters mb-4">
+    <input type="text" [formControl]="search" placeholder="Search by name" class="form-control mb-2">
+    <input type="text" [formControl]="location" placeholder="Search by location" class="form-control mb-2">
+    <input type="number" [formControl]="rating" placeholder="Minimum rating" class="form-control mb-2">
+  </div>
+
+  <!-- Restaurant Cards -->
+  <div class="row">
+    <div *ngFor="let restaurant of filteredRestaurants" class="col-md-4 mb-4">
+      <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+    </div>
+  </div>
+</div>
