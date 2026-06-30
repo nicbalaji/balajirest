@@ -1,24 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f5f5f5;
-  }
-  
-  header {
-    background: linear-gradient(90deg, #ff512f, #dd2476);
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  input {
-    padding: 10px;
-    margin: 10px;
-    width: 200px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .container {
-    padding: 20px;
-  }
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f6fa;
+  color: #222;
+}
+
+/* Optional header style if you still use it */
+header {
+  background: linear-gradient(90deg, #ff512f, #dd2476);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Inputs */
+input {
+  padding: 12px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+input:focus {
+  border-color: #ff4d6d;
+  box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.2);
+}
+
+/* Main container */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 60px;
+}
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}

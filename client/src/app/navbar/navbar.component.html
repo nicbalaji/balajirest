@@ -1,6 +1,65 @@
-<nav style="background:#ff5722;color:white;padding:15px">
+<nav class="navbar">
 
-    <h2>{{title}}</h2>
-    
-    </nav>
-    
+  <h1 class="logo">
+    Food<span>Verse</span>
+  </h1>
+
+  <div class="links">
+
+  <a routerLink="/">
+    🏠 Home
+  </a>
+
+  <a routerLink="/contact">
+  📞 Contact Us
+</a>
+
+  <a routerLink="/favorites">
+    ❤️ Favorites
+  </a>
+
+  <a routerLink="/cart">
+    🛒 Cart
+  </a>
+
+  <a
+    href="#"
+    class="login-btn"
+    (click)="openLogin($event)">
+
+    👤 Login
+
+  </a>
+
+</div>
+
+</nav>
+
+<!-- LOGIN POPUP -->
+<div class="login-overlay" *ngIf="showLogin">
+
+  <div class="login-modal">
+
+    <span
+      class="close-btn"
+      (click)="closeLogin()">
+      ✖
+    </span>
+
+    <h2>🍔 FoodVerse Login</h2>
+
+    <input
+      type="email"
+      placeholder="Enter Email">
+
+    <input
+      type="password"
+      placeholder="Password">
+
+    <button (click)="login()">
+      Login
+    </button>
+
+  </div>
+
+</div>

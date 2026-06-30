@@ -1,23 +1,80 @@
-<div *ngIf="restaurant" 
-     class="card shadow mb-4"
-     (click)="viewDetails(restaurant._id)">
+<div
+  *ngIf="restaurant"
+  class="custom-card"
+  (click)="viewDetails()">
 
-  <!-- Image -->
-  <img 
-    src="https://via.placeholder.com/300x150" 
-    class="card-img-top" 
-    alt="Restaurant Image">
+  <div class="image-wrapper">
+
+    <img
+      class="restaurant-img"
+      [src]="restaurant?.image
+        ? 'http://localhost:3000/images/' + restaurant.image
+        : 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200'">
+
+    <div class="offer-badge">
+      {{ restaurant?.offer || '50% OFF' }}
+    </div>
+
+    <div class="rating-badge">
+      ⭐ {{ restaurant?.rating || 4.5 }}
+    </div>
+
+    <button
+      class="favorite-circle"
+      (click)="addFavorite($event)">
+
+      ❤️
+
+    </button>
+
+    <div
+      class="status-badge"
+      [ngClass]="restaurant?.isOpen ? 'open' : 'closed'">
+
+      {{ restaurant?.isOpen ? 'OPEN' : 'CLOSED' }}
+
+    </div>
+
+  </div>
 
   <div class="card-body">
-    <h5 class="card-title">{{restaurant.name}}</h5>
-    
+
+    <h3 class="card-title">
+      {{ restaurant?.name }}
+    </h3>
+
     <p class="card-text">
-      📍 {{restaurant.location}}
+      📍 {{ restaurant?.location }}
     </p>
 
-    <span class="badge bg-success">
-      ⭐ {{restaurant.rating}}
-    </span>
+    <div class="extra">
+
+      <span>
+        🍽 {{ restaurant?.cuisine || 'Multi Cuisine' }}
+      </span>
+
+      <span class="price">
+        💰 ₹{{ restaurant?.price || 300 }}
+      </span>
+
+    </div>
+
+    <div class="bottom-row">
+
+      <div class="delivery">
+        🚚 {{ restaurant?.deliveryTime || 30 }} mins
+      </div>
+
+      <button
+        class="cart-btn"
+        (click)="addToCart($event)">
+
+        🛒 Add To Cart
+
+      </button>
+
+    </div>
+
   </div>
 
 </div>

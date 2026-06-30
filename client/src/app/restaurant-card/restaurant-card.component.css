@@ -1,0 +1,198 @@
+/* ================= CARD ================= */
+
+.custom-card{
+  position:relative;
+  width:100%;
+  border:none;
+  border-radius:30px;
+  overflow:hidden;
+  background:#fff;
+  cursor:pointer;
+  transition:.35s ease;
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  height:100%;
+}
+
+.custom-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 22px 45px rgba(0,0,0,.16);
+}
+
+/* ================= IMAGE ================= */
+
+.image-wrapper{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+}
+
+.restaurant-img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  display:block;
+  transition:.45s ease;
+}
+
+.custom-card:hover .restaurant-img{
+  transform:scale(1.08);
+}
+
+/* ================= BADGES ================= */
+
+.offer-badge{
+  position:absolute;
+  top:16px;
+  left:16px;
+  background:linear-gradient(135deg,#ff416c,#ff4b2b);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:700;
+  z-index:5;
+}
+
+.rating-badge{
+  position:absolute;
+  top:16px;
+  right:70px;
+  background:#ffcc00;
+  color:#111;
+  padding:8px 14px;
+  border-radius:30px;
+  font-size:14px;
+  font-weight:700;
+  z-index:5;
+}
+
+.status-badge{
+  position:absolute;
+  bottom:16px;
+  left:16px;
+  padding:8px 16px;
+  border-radius:30px;
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  z-index:5;
+}
+
+.open{
+  background:#00b894;
+}
+
+.closed{
+  background:#e53935;
+}
+
+/* ================= FAVORITE HEART ================= */
+
+.favorite-circle{
+  position:absolute;
+  top:16px;
+  right:16px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:#fff;
+  cursor:pointer;
+  font-size:18px;
+  z-index:10;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  transition:.3s;
+}
+
+.favorite-circle:hover{
+  transform:scale(1.1);
+}
+
+/* ================= BODY ================= */
+
+.card-body{
+  padding:24px;
+}
+
+.card-title{
+  font-size:28px;
+  font-weight:800;
+  color:#111;
+  margin-bottom:10px;
+}
+
+.card-text{
+  font-size:16px;
+  color:#666;
+  margin-bottom:18px;
+}
+
+/* ================= DETAILS ================= */
+
+.extra{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:18px;
+  font-size:15px;
+}
+
+.price{
+  color:#ff6b35;
+  font-weight:700;
+}
+
+/* ================= BOTTOM ROW ================= */
+
+.bottom-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:15px;
+  padding-top:15px;
+  border-top:1px solid #eee;
+}
+
+.delivery{
+  font-size:16px;
+  font-weight:600;
+  color:#333;
+}
+
+.cart-btn{
+  border:none;
+  background:#ff6b35;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.3s;
+}
+
+.cart-btn:hover{
+  background:#e95a28;
+  transform:scale(1.05);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+  .restaurant-img{
+    height:220px;
+  }
+
+  .card-body{
+    padding:20px;
+  }
+
+  .card-title{
+    font-size:22px;
+  }
+
+  .bottom-row{
+    flex-direction:column;
+    gap:12px;
+    align-items:flex-start;
+  }
+}

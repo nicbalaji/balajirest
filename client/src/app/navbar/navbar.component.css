@@ -1,0 +1,303 @@
+:host{
+  display:block;
+  width:100%;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:22px 50px;
+
+  background:linear-gradient(
+    135deg,
+    #ffffff,
+    #fff5f7
+  );
+
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  box-sizing:border-box;
+}
+
+/* ================= LOGO ================= */
+
+.logo{
+  font-size:56px;
+  font-weight:800;
+  font-family:'Poppins',sans-serif;
+
+  letter-spacing:-2px;
+  margin:0;
+  cursor:pointer;
+
+  position:relative;
+
+  background:linear-gradient(
+    90deg,
+    #ff4d6d,
+    #ff7b54
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  transition:.3s ease;
+}
+
+.logo:hover{
+  transform:scale(1.05);
+}
+
+.logo span{
+  background:linear-gradient(
+    90deg,
+    #111,
+    #444
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* Animated underline */
+
+.logo::after{
+  content:'';
+  position:absolute;
+  left:0;
+  bottom:-10px;
+
+  width:65%;
+  height:5px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+    90deg,
+    #ff4d6d,
+    #ff7b54,
+    #ffd166,
+    #ff4d6d
+  );
+
+  background-size:300% 100%;
+  animation:foodVerseLine 4s linear infinite;
+}
+
+/* ================= MENU LINKS ================= */
+
+.links{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.links a{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  text-decoration:none;
+  color:#222;
+
+  font-size:18px;
+  font-weight:700;
+
+  padding:12px 18px;
+  border-radius:14px;
+
+  position:relative;
+
+  transition:.3s ease;
+}
+
+.links a:hover{
+  background:#fff4ef;
+  color:#ff6b35;
+  transform:translateY(-2px);
+}
+
+/* Animated underline */
+
+.links a::after{
+  content:'';
+
+  position:absolute;
+  left:50%;
+  bottom:-6px;
+
+  width:0%;
+  height:3px;
+
+  transform:translateX(-50%);
+
+  background:#ff6b35;
+  border-radius:10px;
+
+  transition:.3s;
+}
+
+.links a:hover::after{
+  width:70%;
+}
+
+/* ================= LOGIN BUTTON ================= */
+
+.login-btn{
+  background:#ff6b35;
+  color:white !important;
+  padding:12px 20px;
+  border-radius:14px;
+  font-weight:700;
+}
+
+.login-btn:hover{
+  background:#e95a28 !important;
+  color:white !important;
+}
+
+.login-btn::after{
+  display:none;
+}
+
+/* ================= LOGIN POPUP ================= */
+
+.login-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+
+  width:100%;
+  height:100%;
+
+  background:rgba(0,0,0,.55);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:9999;
+}
+
+.login-modal{
+  width:420px;
+
+  background:white;
+
+  padding:35px;
+
+  border-radius:24px;
+
+  box-shadow:0 20px 50px rgba(0,0,0,.2);
+}
+
+.login-modal h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:#222;
+}
+
+.login-modal input{
+  width:100%;
+
+  padding:14px;
+
+  margin-bottom:15px;
+
+  border:1px solid #ddd;
+  border-radius:12px;
+
+  outline:none;
+
+  box-sizing:border-box;
+}
+
+.login-modal input:focus{
+  border-color:#ff6b35;
+}
+
+.login-modal button{
+  width:100%;
+
+  padding:14px;
+
+  border:none;
+
+  background:#ff6b35;
+  color:white;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+  font-size:16px;
+  font-weight:700;
+
+  transition:.3s;
+}
+
+.login-modal button:hover{
+  background:#e95a28;
+}
+
+.close-btn{
+  float:right;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes foodVerseLine{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  100%{
+    background-position:300% 50%;
+  }
+
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+  .navbar{
+    padding:18px 20px;
+  }
+
+  .logo{
+    font-size:34px;
+  }
+
+  .logo::after{
+    width:70%;
+    height:4px;
+  }
+
+  .links{
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .links a{
+    font-size:14px;
+    padding:8px 12px;
+  }
+
+  .login-modal{
+    width:90%;
+  }
+
+}

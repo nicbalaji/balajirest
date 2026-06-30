@@ -1,0 +1,29 @@
+
+<div class="container">
+
+  <h2 class="title">🍽️ Restaurants</h2>
+
+  <div class="restaurant-grid">
+
+    <div 
+      *ngFor="let r of restaurants" 
+      class="card"
+      (click)="openRestaurant(r._id)"
+    >
+
+      <div class="image-wrapper">
+        <img [src]="'http://localhost:3000/' + r.image" />
+
+        <span class="rating">⭐ {{ r.rating }}</span>
+      </div>
+
+      <div class="content">
+        <h3>{{ r.name }}</h3>
+        <p>{{ r.location }}</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,19 +1,274 @@
+
 <app-navbar></app-navbar>
+<router-outlet></router-outlet>
 
 <div class="container mt-4">
-  <h2>Restaurant List</h2>
 
-  <!-- Filters -->
-  <div class="filters mb-4">
-    <input type="text" [formControl]="search" placeholder="Search by name" class="form-control mb-2">
-    <input type="text" [formControl]="location" placeholder="Search by location" class="form-control mb-2">
-    <input type="number" [formControl]="rating" placeholder="Minimum rating" class="form-control mb-2">
-  </div>
+  <!-- HERO SECTION -->
+  <div class="hero-banner">
 
-  <!-- Restaurant Cards -->
-  <div class="row">
-    <div *ngFor="let restaurant of filteredRestaurants" class="col-md-4 mb-4">
-      <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+    <div class="hero-content">
+
+      <h1 class="hero-title">
+        Discover The Best Food Near You 🍕
+      </h1>
+
+      <p class="hero-subtitle">
+        Explore top-rated restaurants with amazing offers
+      </p>
+
     </div>
+
   </div>
+
+  <!-- FILTER CARD -->
+  <div class="filters-card shadow-sm p-4 mb-5">
+
+    <div class="row g-3">
+
+      <div class="col-md-4">
+        <input
+          type="text"
+          [formControl]="search"
+          placeholder="🔍 Search restaurant"
+          class="form-control custom-input">
+      </div>
+
+      <div class="col-md-4">
+        <input
+          type="text"
+          [formControl]="location"
+          placeholder="📍 Location"
+          class="form-control custom-input">
+      </div>
+
+      <div class="col-md-4">
+        <input
+          type="number"
+          [formControl]="rating"
+          placeholder="⭐ Minimum rating"
+          class="form-control custom-input">
+      </div>
+
+    </div>
+
+  </div>
+
+ <!-- FOOD CATEGORIES -->
+
+<div class="categories-section">
+
+  <div class="section-header">
+
+    <h2>Top Categories</h2>
+
+    <span (click)="showAllRestaurants()">
+      View All →
+    </span>
+
+  </div>
+
+  <div class="categories-wrapper">
+
+    <div
+      class="category-card"
+      (click)="showAllRestaurants()">
+
+      🍽 All
+
+    </div>
+
+    <div
+      class="category-card"
+      (click)="filterCategory('Pizza')">
+
+      🍕 Pizza
+
+    </div>
+
+    <div
+      class="category-card"
+      (click)="filterCategory('Burger')">
+
+      🍔 Burger
+
+    </div>
+
+    <div
+      class="category-card"
+      (click)="filterCategory('Biryani')">
+
+      🍛 Biryani
+
+    </div>
+
+    <div
+      class="category-card"
+      (click)="filterCategory('Chinese')">
+
+      🍜 Chinese
+
+    </div>
+
+    <div
+      class="category-card"
+      (click)="filterCategory('South Indian')">
+
+      🥘 South Indian
+
+    </div>
+
+  </div>
+
 </div>
+  <!-- TITLE -->
+  <h3 class="popular-title">
+    Popular Restaurants
+  </h3>
+
+  <!-- LOADING -->
+  <div class="row" *ngIf="loading">
+
+    <div
+      class="col-lg-4 col-md-6 mb-4"
+      *ngFor="let item of [1,2,3,4,5,6]">
+
+      <div class="skeleton-card"></div>
+
+    </div>
+
+  </div>
+
+ <!-- RESTAURANTS -->
+
+<div class="row g-4" *ngIf="!loading">
+
+  <div
+
+    *ngFor="
+      let restaurant of filteredRestaurants;
+      trackBy: trackByRestaurant
+    "
+
+    class="col-lg-4 col-md-6 col-sm-12">
+
+    <div
+      class="restaurant-wrapper"
+      (click)="openRestaurant(restaurant)">
+
+      <app-restaurant-card
+        [restaurant]="restaurant">
+
+      </app-restaurant-card>
+
+    </div>
+
+  </div>
+
+</div>
+  <!-- EMPTY STATE -->
+  <div
+    *ngIf="
+      !loading &&
+      filteredRestaurants.length === 0
+    "
+
+    class="empty-state">
+
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/6134/6134065.png"
+      width="180">
+
+    <h3 class="mt-3">
+      No Restaurants Found 😔
+    </h3>
+
+    <p>
+      Try changing your filters
+    </p>
+
+    <button
+      class="btn btn-danger"
+      (click)="clearFilters()">
+
+      Clear Filters
+
+    </button>
+
+  </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div
+  class="modal-overlay"
+  *ngIf="selectedRestaurant"
+  (click)="closeModal()">
+
+  <div
+    class="modal-box"
+    (click)="$event.stopPropagation()">
+
+    <!-- IMAGE -->
+    <img
+
+      [src]="selectedRestaurant.image
+        ? 'http://localhost:3000/images/' + selectedRestaurant.image
+        : 'https://via.placeholder.com/800x400'"
+
+      class="modal-image">
+
+    <!-- BODY -->
+    <div class="modal-body">
+
+      <div class="modal-header">
+
+        <h2>
+          {{ selectedRestaurant.name }}
+        </h2>
+
+        <div class="modal-rating">
+          ⭐ {{ selectedRestaurant.rating || 4.5 }}
+        </div>
+
+      </div>
+
+      <p class="modal-location">
+        📍 {{ selectedRestaurant.location }}
+      </p>
+
+      <p class="modal-description">
+
+        Enjoy delicious food,
+        premium ambience,
+        quick delivery and
+        top-rated service.
+
+      </p>
+      
+
+   <div class="modal-actions">
+
+  <button
+    class="favorite-action"
+    (click)="toggleFavorite(selectedRestaurant)">
+
+    {{
+      isFavorite(selectedRestaurant)
+      ? '❤️ Remove Favorite'
+      : '🤍 Add Favorite'
+    }}
+
+  </button>
+
+  <button class="order-action">
+    Order Now 🍔
+  </button>
+
+</div>
+
+  </div>
+
+</div>
+

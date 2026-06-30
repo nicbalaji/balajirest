@@ -1,0 +1,59 @@
+<div class="favorites-container">
+
+  <h1 class="page-title">
+    ❤️ Your Favorites
+  </h1>
+
+  <div *ngIf="favorites.length === 0" class="text-center">
+
+    <h3>😕 No Favorites Yet</h3>
+
+    <p>Add restaurants to favorites first.</p>
+
+  </div>
+
+  <div class="favorites-grid">
+
+    <div
+      *ngFor="let restaurant of favorites"
+      class="favorite-card">
+
+      <img
+        class="favorite-image"
+        [src]="restaurant?.image
+          ? 'http://localhost:3000/images/' + restaurant.image
+          : 'https://via.placeholder.com/400x300'">
+
+      <div class="favorite-content">
+
+        <h2 class="favorite-name">
+          {{ restaurant?.name }}
+        </h2>
+
+        <p class="favorite-location">
+          📍 {{ restaurant?.location }}
+        </p>
+
+        <div class="favorite-footer">
+
+          <div class="rating">
+            ⭐ {{ restaurant?.rating || 4.5 }}
+          </div>
+
+          <button
+            class="remove-btn"
+            (click)="removeFavorite(restaurant._id || restaurant.id)">
+
+            Remove ❤️
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

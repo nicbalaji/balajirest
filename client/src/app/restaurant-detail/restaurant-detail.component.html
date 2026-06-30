@@ -1,0 +1,68 @@
+<div class="detail-container" *ngIf="restaurant">
+
+  <!-- IMAGE -->
+  <img
+    [src]="restaurant.image
+            ? 'http://localhost:3000/images/' + restaurant.image
+            : 'https://via.placeholder.com/600x300'"
+    class="detail-img"
+    alt="Restaurant Image">
+    
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- NAME + RATING -->
+    <div class="top-section">
+
+      <h1>{{ restaurant.name }}</h1>
+
+      <div class="rating">
+        ⭐ {{ restaurant.rating || 4.5 }}
+      </div>
+
+    </div>
+
+    <!-- LOCATION -->
+    <p class="location">
+      📍 {{ restaurant.location }}
+    </p>
+
+    <!-- DESCRIPTION -->
+    <p class="description">
+      Enjoy delicious food, premium ambience,
+      quick delivery and top-rated service.
+    </p>
+
+    <!-- EXTRA DETAILS -->
+    <div class="extra-info">
+
+      <span>
+        🍽 {{ restaurant.cuisine || 'Multi-cuisine' }}
+      </span>
+
+      <span>
+        💰 {{ restaurant.price || '₹300' }}
+      </span>
+
+      <span>
+        🚚 {{ restaurant.deliveryTime || 30 }} mins
+      </span>
+
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="buttons">
+
+      <button class="fav-btn">
+        ❤️ Add Favorite
+      </button>
+
+      <button class="order-btn">
+        Order Now 🍔
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

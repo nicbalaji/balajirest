@@ -1,62 +1,301 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-
-// Import your components
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { RouterOutlet } from '@angular/router';
+import { CartService } from './services/cart.service';
+import { Router } from '@angular/router';
+// ✅ COMPONENTS
 import { NavbarComponent } from './navbar/navbar.component';
 import { RestaurantCardComponent } from './restaurant-card/restaurant-card.component';
+
+// ✅ SERVICES
+import { FavoritesService } from './services/favorites.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
+
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     NavbarComponent,
-    RestaurantCardComponent
+    RestaurantCardComponent,
+     RouterOutlet
   ],
-  templateUrl: './app.component.html'
-})
-export class AppComponent implements OnInit {
-  
-  restaurants: any[] = [];           // All restaurants from backend
-  filteredRestaurants: any[] = [];   // Restaurants after applying filters
 
-  // Form controls for filters
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+
+  // =========================
+  // RESTAURANTS
+  // =========================
+
+  restaurants: any[] = [];
+  filteredRestaurants: any[] = [];
+
+  // =========================
+  // LOADING
+  // =========================
+
+  loading: boolean = true;
+
+  // =========================
+  // FAVORITES
+  // =========================
+
+  favorites: any[] = [];
+
+  // =========================
+  // MODAL
+  // =========================
+
+  selectedRestaurant: any = null;
+
+  // =========================
+  // SEARCH FILTERS
+  // =========================
+
   search = new FormControl('');
   location = new FormControl('');
   rating = new FormControl('');
 
-  constructor(private http: HttpClient) {}
+  // =========================
+  // CONSTRUCTOR
+  // =========================
+
+constructor(
+  private http: HttpClient,
+  private router: Router,
+  private cartService: CartService,
+  private favoritesService: FavoritesService
+) {}
+  // =========================
+  // INIT
+  // =========================
 
   ngOnInit(): void {
-    // Fetch restaurant data from backend
-    this.http.get<any[]>('http://localhost:3000/api/restaurants')
-      .subscribe(data => {
-        this.restaurants = data;
-        this.filteredRestaurants = data; // Initially, show all
+
+    // ❤️ Load favorites
+   this.favorites = this.favoritesService.getFavorites();
+    // =========================
+    // API CALL
+    // =========================
+
+    this.http
+      .get<any[]>('http://localhost:3000/api/restaurants')
+
+      .subscribe({
+
+       next: (data: any[]) => {
+          // Add extra UI properties
+          this.restaurants = data.map((r: any) => ({
+            ...r,
+
+            // Random Open/Close Status
+            isOpen: Math.random() > 0.5,
+
+            // Random Delivery Time
+            deliveryTime:
+              Math.floor(Math.random() * 40) + 10,
+
+            // Random Offer
+            offer:
+              Math.random() > 0.5
+                ? '50% OFF'
+                : 'FREE DELIVERY'
+
+          }));
+
+          this.filteredRestaurants =
+            this.restaurants;
+
+          this.loading = false;
+        },
+
+        error: (err: any) => {
+
+          console.error(err);
+
+          this.loading = false;
+        }
       });
 
-    // Subscribe to filter changes
-    this.search.valueChanges.subscribe(() => this.applyFilters());
-    this.location.valueChanges.subscribe(() => this.applyFilters());
-    this.rating.valueChanges.subscribe(() => this.applyFilters());
+    // =========================
+    // FILTER SUBSCRIPTIONS
+    // =========================
+
+    this.search.valueChanges.subscribe(() => {
+      this.applyFilters();
+    });
+
+    this.location.valueChanges.subscribe(() => {
+      this.applyFilters();
+    });
+
+    this.rating.valueChanges.subscribe(() => {
+      this.applyFilters();
+    });
   }
 
-  // Filter logic
-  applyFilters() {
-    this.filteredRestaurants = this.restaurants.filter(r => {
-      const searchValue = this.search.value?.toLowerCase() || '';
-      const locationValue = this.location.value?.toLowerCase() || '';
-      const ratingValue = this.rating.value;
+  // =========================
+  // APPLY FILTERS
+  // =========================
 
-      const matchesSearch = !searchValue || r.name.toLowerCase().includes(searchValue);
-      const matchesLocation = !locationValue || r.location.toLowerCase().includes(locationValue);
-      const matchesRating = !ratingValue || r.rating >= ratingValue;
+  applyFilters(): void {
 
-      return matchesSearch && matchesLocation && matchesRating;
+    const searchValue =
+      (this.search.value || '')
+        .toLowerCase()
+        .trim();
+
+    const locationValue =
+      (this.location.value || '')
+        .toLowerCase()
+        .trim();
+
+    const ratingValue =
+      Number(this.rating.value) || 0;
+
+    this.filteredRestaurants =
+      this.restaurants.filter(r => {
+
+        const name =
+          (r.name || '')
+            .toLowerCase();
+
+        const location =
+          (r.location || '')
+            .toLowerCase();
+
+        const rating =
+          r.rating || 0;
+
+        return (
+
+          (!searchValue ||
+            name.includes(searchValue))
+
+          &&
+
+          (!locationValue ||
+            location.includes(locationValue))
+
+          &&
+
+          (!ratingValue ||
+            rating >= ratingValue)
+
+        );
+      });
+  }
+
+  // =========================
+  // CATEGORY FILTER
+  // =========================
+
+ filterCategory(category: string): void {
+
+  console.log("Clicked Category:", category);
+
+  console.log("Restaurants:", this.restaurants);
+
+  this.filteredRestaurants =
+    this.restaurants.filter((restaurant: any) => {
+
+      console.log("Restaurant Category:", restaurant.category);
+
+      return (
+        restaurant.category &&
+        restaurant.category
+          .toLowerCase()
+          .trim() ===
+        category.toLowerCase().trim()
+      );
+
     });
+
+  console.log(
+    "Filtered:",
+    this.filteredRestaurants
+  );
+}
+  // =========================
+  // SHOW ALL RESTAURANTS
+  // =========================
+
+  showAllRestaurants(): void {
+
+    this.filteredRestaurants =
+      this.restaurants;
+  }
+
+  // =========================
+  // FAVORITES
+  // =========================
+toggleFavorite(restaurant: any): void {
+
+  this.favorites =
+    this.favoritesService.toggleFavorite(
+      restaurant,
+      this.favorites
+    );
+}
+
+isFavorite(restaurant: any): boolean {
+
+  return this.favoritesService.isFavorite(
+    restaurant,
+    this.favorites
+  );
+}
+  // =========================
+  // OPEN MODAL
+  // =========================
+
+  openRestaurant(restaurant: any): void {
+
+    this.selectedRestaurant =
+      restaurant;
+  }
+
+  // =========================
+  // CLOSE MODAL
+  // =========================
+
+  closeModal(): void {
+
+    this.selectedRestaurant =
+      null;
+  }
+
+  // =========================
+  // CLEAR FILTERS
+  // =========================
+
+  clearFilters(): void {
+
+    this.search.setValue('');
+    this.location.setValue('');
+    this.rating.setValue('');
+
+    this.filteredRestaurants =
+      this.restaurants;
+  }
+
+  // =========================
+  // TRACK BY
+  // =========================
+
+  trackByRestaurant(
+    index: number,
+    restaurant: any
+  ): number {
+
+    return restaurant.id;
   }
 }

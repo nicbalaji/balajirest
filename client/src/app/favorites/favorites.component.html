@@ -1,0 +1,41 @@
+<div class="container mt-4">
+
+  <h2>❤️ My Favorites</h2>
+
+  <div class="row">
+
+    <div
+      class="col-md-4 mb-3"
+      *ngFor="let item of favoriteRestaurants"
+    >
+
+      <div class="card p-3 shadow-sm">
+
+        <h5>{{ item.name }}</h5>
+
+        <p>📍 {{ item.location }}</p>
+
+        <p>⭐ {{ item.rating }}</p>
+
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="removeFavorite(item)"
+        >
+          Remove ❤️
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div
+    *ngIf="favoriteRestaurants.length === 0"
+    class="text-center mt-5"
+  >
+    <h4>No favorites yet ❤️</h4>
+  </div>
+
+</div>

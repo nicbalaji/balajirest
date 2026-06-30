@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-restaurant-card',
-  imports: [],
-  templateUrl: './restaurant-card.html',
-  styleUrl: './restaurant-card.css',
+  standalone: true,
+  template: `<h2>Restaurant Card</h2>`,
+  styles: [``]
 })
 export class RestaurantCard {}
